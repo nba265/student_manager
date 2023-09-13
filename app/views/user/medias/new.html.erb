@@ -1,0 +1,13 @@
+<%= form_for @media, html: { multipart: true } do |form| %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :media %>
+    <%= form.file_field :media %>
+  </div>
+
+  <%= form.submit "Upload Video" %>
+<% end %>

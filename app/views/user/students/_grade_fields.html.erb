@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col">
+    <%= grade_fields.label :subject, "Subjects" %>
+    <%= grade_fields.select :subject, Grade.subjects.keys.map { |subject| [subject.humanize, subject] }, {}, class: 'form-control' %>
+  </div>
+  <div class="col">
+    <%= grade_fields.label :score %>
+    <%= grade_fields.number_field :score, class: 'form-control' %>
+  </div>
+  <div class="col">
+    <%= grade_fields.label :semester %>
+    <%= grade_fields.number_field :semester, class: 'form-control' %>
+  </div>
+</div>
+<%= grade_fields.remove_nested_fields_link 'Remove', class:"btn btn-warning float-end mt-1" %>
+<%= javascript_include_tag 'nested_form_fields' %>

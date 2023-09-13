@@ -1,0 +1,41 @@
+<%= form_with(model: [:user,student], html: { multipart: true } ) do |form| %>
+  <% if student.errors.any? %>
+    <ul>
+      <% student.errors.each do |err| %>
+        <li><%= content_tag(:div, err.message, class: "alert alert-info")%></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="row">
+    <div class="col">
+      <%= form.label :name, "Name" %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :age, "Age" %>
+      <%= form.number_field :age, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :avatar %>
+      <%= form.file_field :avatar %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= form.label :address, "Address" %>
+      <%= form.text_field :address, class: 'form-control' %>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div>
+    <%= form.nested_fields_for :grades do |grade_fields| %>
+      <%= render "grade_fields", grade_fields: grade_fields %>
+    <% end %>
+    <%= form.add_nested_fields_link :grades, 'Add Grade', class:"btn btn-primary"  %>
+  </div>
+  <div class="form-actions">
+    <%= form.button :submit, class: "btn btn-success mt-2" %>
+  </div>
+<% end %>
+<%= javascript_include_tag 'nested_form_fields' %>

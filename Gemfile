@@ -15,8 +15,6 @@ gem 'carrierwave'
 
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
 
-gem 'devise', '~> 4.9', '>= 4.9.2'
-
 gem 'bootstrap', '~> 5.3', '>= 5.3.1'
 
 gem 'nested_form_fields'
@@ -94,3 +92,4 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
 end
+gem "devise", "~> 4.9"

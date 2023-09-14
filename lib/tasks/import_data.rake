@@ -11,7 +11,8 @@ namespace :import do
         grades_attributes: [
           { subject: :math, score: rand(1..9), semester: rand(1..2) },
           { subject: :science, score: rand(1..9), semester: rand(1..2) }
-        ]
+        ],
+        media_attributes: {video: nil, audio: nil, avatar: nil}
       )
       if student.save
         puts 'Data imported successfully.'

@@ -18,15 +18,11 @@
 #
 #  fk_rails_...  (student_id => students.id)
 #
+class Media < ApplicationRecord
+  belongs_to :student
 
-one:
-  student: one
-  name: MyString
-  type: 
-  title: MyString
+  mount_uploader :audio, AudioUploader
+  mount_uploader :video, VideoUploader
+  mount_uploader :avatar, AvatarUploader
 
-two:
-  student: two
-  name: MyString
-  type: 
-  title: MyString
+end

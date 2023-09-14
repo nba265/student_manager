@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module User
-  class StudentsController < ApplicationController
+  class User::StudentsController < ApplicationController
+    before_action :authenticate_admin!,except: [:index]
     before_action :set_student, only: %i[show edit update destroy]
 
     # GET /students or /students.json
@@ -16,10 +16,15 @@ module User
     # GET /students/1 or /students/1.json
     def show; end
 
+    def media
+      @media = Student.find(params[:id]).media
+    end
+
     # GET /students/new
     def new
       @student = Student.new
       @student.grades.build
+      @student.media = Media.new
     end
 
     # POST /students or /students.json
@@ -77,7 +82,7 @@ module User
     # Only allow a list of trusted parameters through.
     def student_params
       params.require(:student).permit(:name, :age, :address, :avatar,
-                                      grades_attributes: %i[id subject score semester comments _destroy])
+                                      grades_attributes: %i[id subject score semester comments _destroy],
+                                      media_attributes: %i[id video audio avatar _destroy])
     end
   end
-end

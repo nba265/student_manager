@@ -18,15 +18,10 @@
 #
 #  fk_rails_...  (student_id => students.id)
 #
+require "test_helper"
 
-one:
-  student: one
-  name: MyString
-  type: 
-  title: MyString
-
-two:
-  student: two
-  name: MyString
-  type: 
-  title: MyString
+class MediaTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

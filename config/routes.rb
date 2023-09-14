@@ -2,10 +2,10 @@
 
 Rails.application.routes.draw do
   devise_for :admins, controllers: {
-        sessions: 'admins/sessions'
-      }
+    sessions: 'admins/sessions'
+  }
   # get 'students/index'
-   root 'user/students#index'
+  root 'user/students#index'
   # root to: "home#index"
   namespace :front do
     resources :login

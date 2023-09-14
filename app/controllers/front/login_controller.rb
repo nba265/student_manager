@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-  class Front::LoginController < ApplicationController
+module Front
+  class LoginController < ApplicationController
     layout 'login'
 
     def index; end
   end
+end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: admins
@@ -17,7 +19,7 @@
 #  index_admins_on_email                 (email) UNIQUE
 #  index_admins_on_reset_password_token  (reset_password_token) UNIQUE
 #
-require "test_helper"
+require 'test_helper'
 
 class AdminTest < ActiveSupport::TestCase
   # test "the truth" do

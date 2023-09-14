@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-  class User::StudentsController < ApplicationController
-    before_action :authenticate_admin!,except: [:index]
+module User
+  class StudentsController < ApplicationController
+    before_action :authenticate_admin!, except: [:index]
     before_action :set_student, only: %i[show edit update destroy]
 
     # GET /students or /students.json
@@ -86,3 +87,4 @@
                                       media_attributes: %i[id video audio avatar _destroy])
     end
   end
+end

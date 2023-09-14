@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: admins
@@ -23,5 +25,5 @@ class Admin < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum type: {admin: 1, user: 2, client: 3 }
+  enum type: { admin: 1, user: 2, client: 3 }
 end

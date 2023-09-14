@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: media
@@ -24,5 +26,4 @@ class Media < ApplicationRecord
   mount_uploader :audio, AudioUploader
   mount_uploader :video, VideoUploader
   mount_uploader :avatar, AvatarUploader
-
 end

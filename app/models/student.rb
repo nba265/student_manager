@@ -12,7 +12,6 @@
 #  updated_at :datetime         not null
 #
 class Student < ApplicationRecord
-
   has_many :grades, dependent: :destroy
   has_one :media, dependent: :destroy
   accepts_nested_attributes_for :grades, :media, allow_destroy: true

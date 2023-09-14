@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: media
@@ -18,7 +20,7 @@
 #
 #  fk_rails_...  (student_id => students.id)
 #
-require "test_helper"
+require 'test_helper'
 
 class MediaTest < ActiveSupport::TestCase
   # test "the truth" do

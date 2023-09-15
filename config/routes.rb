@@ -1,22 +1,33 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :admins, controllers: {
-    sessions: 'admins/sessions'
+  devise_for :customers, controllers: {
+    sessions: 'customers/sessions',
+    passwords: 'customers/passwords'
   }
-  # get 'students/index'
-  root 'user/students#index'
-  # root to: "home#index"
-  namespace :front do
-    resources :login
+
+  devise_for :admins, controllers: {
+    sessions: 'admins/sessions',
+    passwords: 'admins/passwords'
+  }
+
+  namespace :admins do
+    resources :dashboard
   end
 
-  namespace :user do
+  namespace :front do
+    resources :home
+  end
+
+  namespace :customers do
+    resources :dashboard
     resources :students do
       get 'media', on: :member
     end
 
-    resources :medias
+    resources :customers
+
+    # resources :medias
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

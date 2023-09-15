@@ -1,0 +1,42 @@
+<p style="color: green"><%= notice %></p>
+<h1 class = "text-center fs-2 fw-bold"><%= @student.name %></h1>
+<div class="text-center mb-2">
+  <% unless @student.media.nil? %>
+    <% if @student.media.avatar? %>
+      <%= image_tag @student.media.avatar_url, alt: "Student Avatar", class:"rounded img-fluid w-50",style:" height: 300px" %>
+    <% end %>
+    <% if @student.media.audio? %>
+      <%= audio_tag(@student.media.audio_url, controls: true) %>
+    <% end %>
+    <% if @student.media.video? %>
+      <%= video_tag(@student.media.video_url, controls: true) %>
+    <% end %>
+  <% end %>
+</div>
+<div class="table-responsive">
+  <table class = 'table mx-auto table-striped table-bordered table-condensed text-center align-middle'>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Score</th>
+        <th scope="col">Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @student.grades.each do |grade| %>
+        <tr>
+          <td><%= grade.id %></td>
+          <td><%= grade.subject %></td>
+          <td><%= grade.score %></td>
+          <td><%= grade.semester %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div>
+  <%= link_to 'Edit', edit_customers_student_path(@student), class: "btn btn-primary mt-2"%>
+  <%= link_to "Back to students", customers_students_path, class:"btn btn-primary mt-2" %>
+  <%= link_to 'Delete', customers_student_path(@student), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-warning float-end mt-2" %>
+</div>

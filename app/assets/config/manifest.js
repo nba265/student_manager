@@ -6,5 +6,6 @@
 //= link bootstrap.min.js
 //= link popper.js
 //= link nested_form_fields.js
+ //= link customer/customers.css
 
 

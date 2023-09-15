@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Admins
+module Customers
   class SessionsController < Devise::SessionsController
     # before_action :configure_sign_in_params, only: [:create]
 
     # GET /resource/sign_in
     # def new
-
+    #   super
     # end
 
     # POST /resource/sign_in
@@ -15,11 +15,11 @@ module Admins
     # end
 
     def after_sign_in_path_for(resource)
-      stored_location_for(resource) || admins_dashboard_index_path
+      stored_location_for(resource) || customers_students_path
     end
 
     def after_sign_out_path_for(resource)
-      stored_location_for(resource) || admin_session_path
+      stored_location_for(resource) || customer_session_path
     end
 
     # DELETE /resource/sign_out

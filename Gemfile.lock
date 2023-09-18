@@ -226,6 +226,8 @@ GEM
       rack (>= 2.2.3)
       rack-protection
     orm_adapter (0.5.0)
+    paranoia (2.6.2)
+      activerecord (>= 5.1, < 7.1)
     popper_js (2.11.8)
     pry (0.14.2)
       coderay (~> 1.1)
@@ -294,9 +296,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    simple_form (5.2.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -354,11 +353,11 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   nested_form_fields
   omniauth
+  paranoia
   pry
   puma (~> 5.0)
   rails (~> 7.0.8)
   selenium-webdriver
-  simple_form (~> 5.2)
   sprockets-rails
   stimulus-rails
   turbo-rails

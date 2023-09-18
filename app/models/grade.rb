@@ -6,6 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  commest    :text(65535)
+#  deleted_at :datetime
 #  score      :integer
 #  semester   :integer
 #  subject    :integer
@@ -15,6 +16,7 @@
 #
 # Indexes
 #
+#  index_grades_on_deleted_at  (deleted_at)
 #  index_grades_on_student_id  (student_id)
 #
 # Foreign Keys
@@ -22,6 +24,7 @@
 #  fk_rails_...  (student_id => students.id)
 #
 class Grade < ApplicationRecord
+  acts_as_paranoid
   validates :subject, presence: true # , uniqueness: {scope: [:semester,:student_id], message: "Duplicate subject"}
   validates :score, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :semester, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }

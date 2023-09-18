@@ -22,7 +22,12 @@ Rails.application.routes.draw do
   namespace :customers do
     resources :dashboard
     resources :students do
-      get 'media', on: :member
+      member do
+        get 'media'
+      end
+      collection do
+        get 'deleted'
+      end
     end
 
     resources :customers

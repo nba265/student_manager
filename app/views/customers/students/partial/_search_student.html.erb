@@ -1,0 +1,19 @@
+<div class="row g-2">
+  <div class="col-md">
+    <div class="form-floating">
+      <%= search_fields.text_field :name, class:"form-control", placeholder: "Search by Name", id:"floatingInputGrid" %>
+      <label for="floatingInputGrid">Name</label>
+    </div>
+  </div>
+  <div class="col-md">
+    <div class="form-floating">
+      <%= search_fields.select :subject,[["Show All", nil]] + Grade.subjects.keys.map { |subject| [subject.humanize, subject] }, {}, class: 'form-select', id:"floatingSelectGrid" %>
+      <label for="floatingSelectGrid">Subjects</label>
+    </div>
+  </div>
+  <div class="col-md">
+    <div class="form-floating">
+      <%= search_fields.submit "Search", class: "btn btn-success mt-2" %>
+    </div>
+  </div>
+</div>

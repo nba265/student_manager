@@ -21,8 +21,6 @@ gem 'nested_form_fields'
 
 gem 'foreman', github: 'ddollar/foreman'
 
-gem 'simple_form', '~> 5.2'
-
 gem 'jquery-rails'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -94,4 +92,5 @@ group :test do
 end
 gem 'devise', '~> 4.9'
 gem 'omniauth'
+gem 'paranoia'
 gem 'pry'

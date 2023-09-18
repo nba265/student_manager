@@ -34,3 +34,5 @@
 .env
 
 .vscode
+
+Gemfile.lock

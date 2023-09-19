@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BirthdayJob < ApplicationJob
   queue_as :default
 

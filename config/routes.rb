@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
-    passwords: 'admins/passwords',
+    passwords: 'admins/passwords'
   }
 
   devise_scope :customers do
@@ -25,7 +25,6 @@ Rails.application.routes.draw do
   end
 
   root to: 'customers/students#index'
-
 
   namespace :customers do
     resources :dashboard

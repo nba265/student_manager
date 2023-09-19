@@ -51,8 +51,8 @@ module Customers
           format.html { redirect_to customers_students_url(@student), notice: 'Student was successfully created.' }
           format.json { render :show, status: :created, location: @student }
         else
-          Rails.application.config.create_student_logger.
-            error "Error while create #{@student.to_json}: #{@student.errors.full_messages.to_sentence}"
+          Rails.application.config.create_student_logger
+               .error "Error while create #{@student.to_json}: #{@student.errors.full_messages.to_sentence}"
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end

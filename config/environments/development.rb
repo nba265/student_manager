@@ -2,6 +2,12 @@
 
 require 'active_support/core_ext/integer/time'
 
+log_create_student_path = Rails.root.join('log', 'create_student.log')
+max_log_size = 10 * 1024 * 1024 # 10 MB
+
+create_student_logger = Logger.new(log_create_student_path, 1, max_log_size)
+create_student_logger.level = Logger::DEBUG
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -71,4 +77,15 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    user_name: ENV['GMAIL_USERNAME'],
+    password: ENV['GMAIL_PASSWORD'],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  config.create_student_logger = create_student_logger
 end

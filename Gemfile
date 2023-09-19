@@ -91,6 +91,10 @@ group :test do
   gem 'selenium-webdriver'
 end
 gem 'devise', '~> 4.9'
+gem 'letter_opener'
+gem 'letter_opener_web'
+gem 'mail'
 gem 'omniauth'
 gem 'paranoia'
 gem 'pry'
+gem 'simple_form'

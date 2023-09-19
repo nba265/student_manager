@@ -5,12 +5,12 @@ module Customers
     # before_action :set_student, only: %i[show edit update destroy]
     # GET /students or /students.json
     def index
-      @students = if (params[:deleted] = true)
-                    Student.only_deleted.includes(:grades).order(:id)
+      @students = if params[:deleted] == 'true'
+                    Student.only_deleted
                   else
-                    Student.includes(:grades).order(:id)
-                  end
-
+                    Student.all
+                  end.includes(:grades).order(:id)
+      # @students = Student.includes(:grades).all.order(:id)
       @students = @students.where('students.name LIKE ?', "%#{params[:name]}%") if params[:name].present?
 
       @students = @students.where(grades: { subject: params[:subject] }) if params[:subject].present?
@@ -18,14 +18,11 @@ module Customers
       @students = @students.page(params[:page])
     end
 
-    def deleted
-      @students = Student.only_deleted
+    def restore
+      @student = Student.only_deleted.find(params[:id])
+      @student.restore
 
-      @students = @students.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
-
-      @students = @students.order(:id).page(params[:page])
-
-      render :index
+      redirect_to customers_students_path(deleted: true), notice: 'Restore success!'
     end
 
     # GET /students/1 or /students/1.json
@@ -50,9 +47,12 @@ module Customers
 
       respond_to do |format|
         if @student.save
+          Rails.application.config.create_student_logger.info "Create Student:  #{@student.to_json}"
           format.html { redirect_to customers_students_url(@student), notice: 'Student was successfully created.' }
           format.json { render :show, status: :created, location: @student }
         else
+          Rails.application.config.create_student_logger.
+            error "Error while create #{@student.to_json}: #{@student.errors.full_messages.to_sentence}"
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end
@@ -61,6 +61,9 @@ module Customers
 
     # GET /students/1/edit
     def edit
+      @student = Student.with_deleted.find(params[:id])
+      redirect_to customers_students_path(@student) if @student.deleted?
+
       @student = Student.find(params[:id])
     end
 

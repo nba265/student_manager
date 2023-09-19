@@ -1,0 +1,2 @@
+class BirthdayMailer < ApplicationMailer
+end

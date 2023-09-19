@@ -3,13 +3,18 @@
 Rails.application.routes.draw do
   devise_for :customers, controllers: {
     sessions: 'customers/sessions',
-    passwords: 'customers/passwords'
+    passwords: 'customers/passwords',
+    registrations: 'customers/registrations'
   }
 
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
-    passwords: 'admins/passwords'
+    passwords: 'admins/passwords',
   }
+
+  devise_scope :customers do
+    put 'reset_password', to: 'passwords#reset_password'
+  end
 
   namespace :admins do
     resources :dashboard
@@ -19,17 +24,17 @@ Rails.application.routes.draw do
     resources :home
   end
 
+  root to: 'customers/students#index'
+
+
   namespace :customers do
     resources :dashboard
     resources :students do
       member do
         get 'media'
-      end
-      collection do
-        get 'deleted'
+        put 'restore'
       end
     end
-
     resources :customers
 
     # resources :medias

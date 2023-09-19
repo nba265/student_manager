@@ -1,3 +1,6 @@
+  <% if params[:deleted] == 'true' %>
+      <%= search_fieldsf.hidden_field :deleted, value: "true" %>
+  <% end %>
 <div class="row">
   <div class="col">
     <%= grade_fields.label :subject, "Subjects" %>

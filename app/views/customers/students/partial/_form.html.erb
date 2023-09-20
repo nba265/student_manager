@@ -16,6 +16,15 @@
       <%= form.number_field :age, class: 'form-control' %>
     </div>
     <div class="row">
+    <div class="col">
+      <%= form.label :email, "Email" %>
+      <%= form.email_field :email, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :birthday, "Birthday" %>
+      <%= form.date_field :birthday, class: 'form-control' %>
+    </div>
+    <div class="row">
       <%= form.fields_for  :media do |media_fields| %>
         <div class="col">
           <%= media_fields.label :avatar %>

@@ -5,7 +5,6 @@
 # Table name: customers
 #
 #  id                     :bigint           not null, primary key
-#  birthday               :date
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  first_name             :string(255)
@@ -26,8 +25,6 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  attr_accessor :birthday
 
   def self.fullname
     "#{first_name} #{last_name}"

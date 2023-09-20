@@ -5,7 +5,6 @@
 # Table name: customers
 #
 #  id                     :bigint           not null, primary key
-#  birthday               :date
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  first_name             :string(255)

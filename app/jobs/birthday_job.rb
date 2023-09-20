@@ -3,7 +3,7 @@
 class BirthdayJob < ApplicationJob
   queue_as :default
 
-  def perform(customer)
-    BirthdayMailer.birthday_email(customer).deliver_later
+  def perform(student)
+    BirthdayMailer.birthday_email(student).deliver_later
   end
 end

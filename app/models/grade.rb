@@ -27,7 +27,7 @@ class Grade < ApplicationRecord
   acts_as_paranoid
   validates :subject, presence: true # , uniqueness: {scope: [:semester,:student_id], message: "Duplicate subject"}
   validates :score, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
-  validates :semester, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :semester, presence: true, numericality: { greater_than_or_equal_to: 1 }
 
   enum subject: { math: 0, science: 1, history: 2, literature: 3 }
 

@@ -28,8 +28,10 @@ Rails.application.routes.draw do
 
   namespace :customers do
     resources :dashboard
+    resources :birthdays
     resources :students do
       member do
+        put 'swap_positions'
         get 'media'
         put 'restore'
       end

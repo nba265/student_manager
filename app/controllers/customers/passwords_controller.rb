@@ -2,23 +2,6 @@
 
 module Customers
   class PasswordsController < Devise::PasswordsController
-    def reset_password
-      customer = Customer.find_by(email: params[:customer][:email])
-
-      if customer&.valid_password?(params[:customer][:current_password])
-        if customer.update(password: params[:customer][:password],
-                           password_confirmation: params[:customer][:password_confirmation])
-          redirect_to customer_session_path, notice: 'Password has been changed successfully.'
-        else
-          flash.now[:alert] = 'Password change failed.'
-          render :edit
-        end
-      else
-        flash.now[:alert] = 'Email or old password is incorrect.'
-        render :edit
-      end
-    end
-
     # GET /resource/password/new
     # def new
     #   super

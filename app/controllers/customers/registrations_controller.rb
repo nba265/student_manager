@@ -10,12 +10,6 @@ module Customers
     #   super
     # end
 
-    def create
-      super do |user|
-        user.birthday = params[:customer][:birthday]
-      end
-    end
-
     # GET /resource/edit
     # def edit
     #   super

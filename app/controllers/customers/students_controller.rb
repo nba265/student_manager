@@ -5,17 +5,7 @@ module Customers
     # before_action :set_student, only: %i[show edit update destroy]
     # GET /students or /students.json
     def index
-      @students = if params[:deleted] == 'true'
-                    Student.only_deleted
-                  else
-                    Student.all
-                  end.includes(:grades).order(:id)
-      # @students = Student.includes(:grades).all.order(:id)
-      @students = @students.where('students.name LIKE ?', "%#{params[:name]}%") if params[:name].present?
-
-      @students = @students.where(grades: { subject: params[:subject] }) if params[:subject].present?
-
-      @students = @students.page(params[:page])
+      @students = Students::IndexService.call(params)
     end
 
     def restore
@@ -92,7 +82,23 @@ module Customers
       end
     end
 
+    def swap_positions
+      student1 = Student.with_deleted.find(params[:id])
+      student2 = Student.with_deleted.find(params[:student2_id])
+      if check_position_valid(student1, student2)
+        Students::SwapPositionsService.new(student1, student2).assign_positions_nil
+        student1 = Student.with_deleted.find(params[:id])
+        student2 = Student.with_deleted.find(params[:student2_id])
+      end
+      Students::SwapPositionsService.call(student1, student2)
+      redirect_to customers_students_path
+    end
+
     private
+
+    def check_position_valid(student1, student2)
+      student1.position.nil? || student2.position.nil? || student1.position == student2.position
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -101,7 +107,7 @@ module Customers
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.require(:student).permit(:name, :age, :address, :avatar,
+      params.require(:student).permit(:name, :age, :address, :avatar, :email, :birthday,
                                       grades_attributes: %i[id subject score semester comments _destroy],
                                       media_attributes: %i[id video audio avatar _destroy])
     end

@@ -97,9 +97,15 @@ module Customers
       head :no_content
     end
 
-    def reload_student_row
-      @student = Student.find(params[:id])
-      render partial: 'customers/students/partial/student_row', locals: { student: @student }
+    def reload_student_table
+      @students = if params[:deleted] == 'true'
+                    Student.only_deleted.page(params[:page]).includes(:grades)
+                  else
+                    Student.page(params[:page]).includes(:grades)
+                  end
+      @q = @students.ransack(params[:q])
+      @students = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id)
+      render partial: 'customers/students/partial/student_table', locals: { students: @students }
     end
 
     private

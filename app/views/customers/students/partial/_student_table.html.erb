@@ -1,0 +1,50 @@
+  
+<thead>
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Age</th>
+    <th scope="col">Address</th>
+    <th scope="col">Birthday</th>
+    <th scope="col">Position</th>
+    <th scope="col"></th>
+  </tr>
+</thead>
+<tbody>
+  <% students.each_with_index do |student, index| %>
+    <tr id="student-<%= student.id %>">
+      <td>
+        <% if index > 0 %>
+          <!-- Nút "⇑" để di chuyển lên trên -->
+          <button class="btn btn-warning btn-up"
+                data-student-id="<%= student.id %>" 
+                data-prev-student-id="<%= students[index - 1].id %>" 
+                data-index="<%= index %>"
+                data-prev-index="<%= (index - 1) %>">⇑</button>
+        <% end %>
+        <% if index < (students.size - 1)  %>
+          <!-- Nút "⇓" để di chuyển xuống dưới -->
+          <button class="btn btn-warning btn-down" 
+                data-student-id="<%= student.id %>" 
+                data-next-student-id="<%= students[index + 1].id %>" 
+                data-index="<%= index %>"
+                data-next-index="<%= index + 1 %>">⇓</button>
+        <% end %>
+      </td>
+      <td><%= student.id %></td>
+      <td><%= link_to student.full_name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
+      <td><%= student.age %></td>
+      <td><%= student.address %></td>
+      <td><%= student.birthday %></td>
+      <td><%= student.position %></td>
+      <td>
+        <% if student.deleted? %>
+          <%= link_to "Restore", restore_customers_student_path(student.id), data: {turbo_method: :put, turbo_confirm: "Restore?"}, class: "btn btn-primary"  %>
+        <% else %>
+          <%= link_to "Media", media_customers_student_path(student), class: "btn btn-primary"  %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>

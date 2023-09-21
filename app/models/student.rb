@@ -36,6 +36,14 @@ class Student < ApplicationRecord
 
   acts_as_paranoid
 
+  ransacker :full_name do |parent|
+    Arel::Nodes::InfixOperation.new('||',
+      Arel::Nodes::InfixOperation.new('||',
+        parent.table[:first_name], Arel::Nodes.build_quoted(' ')
+      ),
+      parent.table[:last_name]
+    )
+  end
   # def save_with_position
   #   highest_position = Student.maximum(:position)
   #   new_position = highest_position ? highest_position + 1 : 1
@@ -49,6 +57,10 @@ class Student < ApplicationRecord
     self.position = highest_position ? highest_position + 1 : 1
   end
 
+  def full_name
+    "#{last_name} #{first_name}"
+  end
+
   private
 
   def self.ransackable_attributes(_auth_object = nil)
@@ -59,6 +71,7 @@ class Student < ApplicationRecord
   def self.ransackable_associations(_auth_object = nil)
     %w[grades media]
   end
+
 
   def uniq_grade
     temp = grades.map { |grade| [grade.subject, grade.semester] }

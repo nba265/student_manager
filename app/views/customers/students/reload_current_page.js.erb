@@ -1,0 +1,4 @@
+var studentsHtml = "<%= escape_javascript(render 'customers/students/partial/student', students: @students) %>";
+
+// Cập nhật nội dung của bảng Student với dữ liệu mới
+$("#student-table").html(studentsHtml);

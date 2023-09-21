@@ -1,11 +1,20 @@
-<!-- _student_row.html.erb -->
 <tr id="student-<%= student.id %>">
   <td>
     <% if index > 0 %>
-      <%= link_to '⇑', '#', data: { student_id: student.id, prev_student_id: @students[index - 1].id }, class: "btn btn-warning btn-up"  %>
+      <!-- Nút "⇑" để di chuyển lên trên -->
+      <button class="btn btn-warning btn-up"
+         data-student-id="<%= student.id %>" 
+         data-prev-student-id="<%= @students[index - 1].id %>" 
+         data-index="<%= index %>"
+         data-prev-index="<%= (index - 1) %>">⇑</button>
     <% end %>
-    <% if index < @students.size - 1  %>
-      <%= link_to '⇓', '#', data: { student_id: student.id, next_student_id: @students[index + 1].id }, class: "btn btn-warning btn-down"  %>
+    <% if index < (@students.size - 1)  %>
+      <!-- Nút "⇓" để di chuyển xuống dưới -->
+      <button class="btn btn-warning btn-down" 
+        data-student-id="<%= student.id %>" 
+        data-next-student-id="<%= @students[index + 1].id %>" 
+        data-index="<%= index %>"
+        data-next-index="<%= index + 1 %>">⇓</button>
     <% end %>
   </td>
   <td><%= student.id %></td>

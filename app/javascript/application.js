@@ -7,6 +7,8 @@ import "nested_form_fields"
 
 import "customer/ajaxteacher"
 
+import "customer/swap_position_student"
+
 
 //= require jquery3
 //= require popper

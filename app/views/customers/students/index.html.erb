@@ -4,46 +4,8 @@
 <% end %>
 <br>
 <div class="table-responsive">
-  <table class = 'table mx-auto table-striped table-bordered table-condensed text-center align-middle'>
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Address</th>
-        <th scope="col">Birthday</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @students.each_with_index do |student, index| %>
-        <tr id="student-<%= student.id %>">
-          <td>
-            <% if index > 0 %>
-              <!-- Nút "⇑" để di chuyển lên trên -->
-              <button class="btn btn-warning btn-up" data-student-id="<%= student.id %>" data-prev-student-id="<%= @students[index - 1].id %>">⇑</button>
-            <% end %>
-            <% if index < @students.size - 1  %>
-              <!-- Nút "⇓" để di chuyển xuống dưới -->
-              <button class="btn btn-warning btn-down" data-student-id="<%= student.id %>" data-next-student-id="<%= @students[index + 1].id %>">⇓</button>
-            <% end %>
-          </td>
-          <td><%= student.id %></td>
-          <td><%= link_to student.last_name + ' ' + student.first_name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
-          <td><%= student.age %></td>
-          <td><%= student.address %></td>
-          <td><%= student.birthday %></td>
-          <td>
-            <% if student.deleted? %>
-              <%= link_to 'Restore', restore_customers_student_path(student.id), data: {turbo_method: :put, turbo_confirm: 'Restore?'}, class: "btn btn-primary"  %>
-            <% else %>
-              <%= link_to 'Media', media_customers_student_path(student), class: "btn btn-primary"  %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+  <table id="student_table" class = 'table mx-auto table-striped table-bordered table-condensed text-center align-middle'>
+    <%= render "customers/students/partial/student_table", students: @students %>
   </table>
 </div>
 <div>
@@ -53,60 +15,4 @@
 </div>
 <div class="d-flex justify-content-end"><%= paginate @students, theme: 'bootstrap-5'%></div>
 <%= javascript_include_tag "jquery" %>
-<script>
-  // Xử lý sự kiện khi nhấn nút "⇑" để di chuyển lên trên
-  $(".btn-up").click(function (e) {
-    e.preventDefault();
-    var studentId = $(this).data("student-id");
-    var prevStudentId = $(this).data("prev-student-id");
-
-    $.ajax({
-      type: "PUT",
-      url: "/customers/students/swap_positions",
-      data: {
-        id: studentId,
-        student2_id: prevStudentId,
-        authenticity_token: $("meta[name='csrf-token']").attr("content"),
-      },
-      success: function () {
-        // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
-        updateStudentRow(studentId);
-        updateStudentRow(prevStudentId);
-      },
-    });
-  });
-
-  // Xử lý sự kiện khi nhấn nút "⇓" để di chuyển xuống dưới
-  $(".btn-down").click(function (e) {
-    e.preventDefault();
-    var studentId = $(this).data("student-id");
-    var nextStudentId = $(this).data("next-student-id");
-
-    $.ajax({
-      type: "PUT",
-      url: "/customers/students/swap_positions",
-      data: {
-        id: studentId,
-        student2_id: nextStudentId,
-        authenticity_token: $("meta[name='csrf-token']").attr("content"),
-      },
-      success: function () {
-        // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
-        updateStudentRow(studentId);
-        updateStudentRow(nextStudentId);
-      },
-    });
-  });
-
-  // Hàm để cập nhật nội dung của hàng học sinh
-  function updateStudentRow(studentId) {
-    $.ajax({
-      type: "GET",
-      url: "/customers/students/reload_student_row",
-      data: { id: studentId },
-      success: function (data) {
-        $("#student-" + studentId).html(data);
-      },
-    });
-  }
-</script>
+<%= javascript_include_tag "customer/swap_position_student" %>

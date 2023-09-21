@@ -37,8 +37,9 @@ Rails.application.routes.draw do
         put 'restore'
       end
       collection do
-        get 'reload_student_row'
+        get 'reload_student_table'
         put 'swap_positions'
+        get 'reload_current_page'
       end
     end
     resources :customers

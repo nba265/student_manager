@@ -2,10 +2,9 @@
 //= link_directory ../stylesheets .css
 //= link_tree ../../javascript .js
 //= link_tree ../../../vendor/javascript .js
+
 //= link jquery.js
 //= link bootstrap.min.js
 //= link popper.js
 //= link nested_form_fields.js
- //= link customer/customers.css
-
 

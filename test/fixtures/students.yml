@@ -8,6 +8,8 @@
 #  birthday   :date
 #  deleted_at :datetime
 #  email      :string(255)
+#  first_name :string(255)
+#  last_name  :string(255)
 #  name       :string(255)
 #  position   :integer
 #  created_at :datetime         not null

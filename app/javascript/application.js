@@ -5,7 +5,10 @@ import "controllers"
 import "jquery"
 import "nested_form_fields"
 
+import "customer/ajaxteacher"
+
 
 //= require jquery3
 //= require popper
 //= require bootstrap
+

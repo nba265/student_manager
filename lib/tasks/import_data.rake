@@ -21,4 +21,33 @@ namespace :import do
       end
     end
   end
+
+  task data_teacher: :environment do
+    first_name = ('A'..'Z').to_a
+    last_name = %w[Nguyen Le Tran Hoang]
+    20.times do
+      teacher = Teacher.new(
+        name: "#{last_name.sample} Van #{first_name.sample}",
+        age: rand(20..80)
+      )
+      if teacher.save
+        puts 'Data imported successfully.'
+      else
+        puts "Error importing data: #{teacher.errors.full_messages.join(', ')}"
+      end
+    end
+  end
+
+  task name_student: :environment do
+    arr = ('A'..'Z').to_a
+    last_name = %w[Nguyen Le Tran Hoang]
+    students = Student.with_deleted.all
+    students.each do |student|
+      if student.update_column(:first_name, arr.sample) && student.update_column(:last_name, last_name.sample)
+        puts 'Data imported successfully.'
+      else
+        puts "Error importing data: #{student.errors.full_messages.join(', ')}"
+      end
+    end
+  end
 end

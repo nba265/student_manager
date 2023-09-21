@@ -10,6 +10,8 @@
 #  birthday   :date
 #  deleted_at :datetime
 #  email      :string(255)
+#  first_name :string(255)
+#  last_name  :string(255)
 #  name       :string(255)
 #  position   :integer
 #  created_at :datetime         not null
@@ -48,6 +50,15 @@ class Student < ApplicationRecord
   end
 
   private
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[address age birthday created_at deleted_at email first_name id last_name name
+       position updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[grades media]
+  end
 
   def uniq_grade
     temp = grades.map { |grade| [grade.subject, grade.semester] }

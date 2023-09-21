@@ -5,7 +5,9 @@ module Customers
     # before_action :set_student, only: %i[show edit update destroy]
     # GET /students or /students.json
     def index
-      @students = Students::IndexService.call(params)
+      @students = params[:deleted] == 'true' ? Student.only_deleted.includes(:grades) : Student.includes(:grades)
+      @q = @students.ransack(params[:q])
+      @students = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id).page(params[:page])
     end
 
     def restore
@@ -91,7 +93,13 @@ module Customers
         student2 = Student.with_deleted.find(params[:student2_id])
       end
       Students::SwapPositionsService.call(student1, student2)
-      redirect_to customers_students_path
+
+      head :no_content
+    end
+
+    def reload_student_row
+      @student = Student.find(params[:id])
+      render partial: 'customers/students/partial/student_row', locals: { student: @student }
     end
 
     private

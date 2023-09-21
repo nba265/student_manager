@@ -1,5 +1,5 @@
 <h1>Students</h1>
-<%= form_with(url: customers_students_path(deleted: params[:deleted]) , method: :get) do |search_fields| %>
+<%= search_form_for [:customers,@q] do |search_fields| %>
   <%= render "customers/students/partial/search_student", search_fields: search_fields %>
 <% end %>
 <br>
@@ -21,14 +21,16 @@
         <tr id="student-<%= student.id %>">
           <td>
             <% if index > 0 %>
-              <%= link_to '⇑', swap_positions_customers_student_path(id: student.id, student2_id: @students[index - 1].id),data: {turbo_method: :put}, class: "btn btn-warning"  %>
+              <!-- Nút "⇑" để di chuyển lên trên -->
+              <button class="btn btn-warning btn-up" data-student-id="<%= student.id %>" data-prev-student-id="<%= @students[index - 1].id %>">⇑</button>
             <% end %>
             <% if index < @students.size - 1  %>
-              <%= link_to '⇓', swap_positions_customers_student_path(id: student.id, student2_id: @students[index + 1].id),data: {turbo_method: :put}, class: "btn btn-warning"  %>
+              <!-- Nút "⇓" để di chuyển xuống dưới -->
+              <button class="btn btn-warning btn-down" data-student-id="<%= student.id %>" data-next-student-id="<%= @students[index + 1].id %>">⇓</button>
             <% end %>
           </td>
           <td><%= student.id %></td>
-          <td><%= link_to student.name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
+          <td><%= link_to student.last_name + ' ' + student.first_name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
           <td><%= student.age %></td>
           <td><%= student.address %></td>
           <td><%= student.birthday %></td>
@@ -50,3 +52,61 @@
   <%= link_to 'Show Deleted Students', customers_students_path(deleted: true), class: "btn btn-primary mb-2 float-end" %>
 </div>
 <div class="d-flex justify-content-end"><%= paginate @students, theme: 'bootstrap-5'%></div>
+<%= javascript_include_tag "jquery" %>
+<script>
+  // Xử lý sự kiện khi nhấn nút "⇑" để di chuyển lên trên
+  $(".btn-up").click(function (e) {
+    e.preventDefault();
+    var studentId = $(this).data("student-id");
+    var prevStudentId = $(this).data("prev-student-id");
+
+    $.ajax({
+      type: "PUT",
+      url: "/customers/students/swap_positions",
+      data: {
+        id: studentId,
+        student2_id: prevStudentId,
+        authenticity_token: $("meta[name='csrf-token']").attr("content"),
+      },
+      success: function () {
+        // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
+        updateStudentRow(studentId);
+        updateStudentRow(prevStudentId);
+      },
+    });
+  });
+
+  // Xử lý sự kiện khi nhấn nút "⇓" để di chuyển xuống dưới
+  $(".btn-down").click(function (e) {
+    e.preventDefault();
+    var studentId = $(this).data("student-id");
+    var nextStudentId = $(this).data("next-student-id");
+
+    $.ajax({
+      type: "PUT",
+      url: "/customers/students/swap_positions",
+      data: {
+        id: studentId,
+        student2_id: nextStudentId,
+        authenticity_token: $("meta[name='csrf-token']").attr("content"),
+      },
+      success: function () {
+        // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
+        updateStudentRow(studentId);
+        updateStudentRow(nextStudentId);
+      },
+    });
+  });
+
+  // Hàm để cập nhật nội dung của hàng học sinh
+  function updateStudentRow(studentId) {
+    $.ajax({
+      type: "GET",
+      url: "/customers/students/reload_student_row",
+      data: { id: studentId },
+      success: function (data) {
+        $("#student-" + studentId).html(data);
+      },
+    });
+  }
+</script>

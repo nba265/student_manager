@@ -1,13 +1,14 @@
+<%= hidden_field_tag :deleted, params[:deleted] if params[:deleted] %>
 <div class="row g-2">
   <div class="col-md">
     <div class="form-floating">
-      <%= search_fields.text_field :name, class:"form-control", placeholder: "Search by Name", id:"floatingInputGrid" %>
-      <label for="floatingInputGrid">Name</label>
+      <%= search_fields.search_field :first_name_or_last_name_cont, class:"form-control", placeholder: "Search by Name", id:"floatingInputGrid" %>
+      <label for="floatingInputGrid">Full Name</label>
     </div>
   </div>
   <div class="col-md">
     <div class="form-floating">
-      <%= search_fields.select :subject,[["Show All", nil]] + Grade.subjects.keys.map { |subject| [subject.humanize, subject] }, {}, class: 'form-select', id:"floatingSelectGrid" %>
+      <%= search_fields.select :grades_subject_eq,[["Show All", nil]] + Grade.subjects.map { |subject| [subject[0], subject[1]] }, {}, class: 'form-select', id:"floatingSelectGrid" %>
       <label for="floatingSelectGrid">Subjects</label>
     </div>
   </div>

@@ -32,4 +32,8 @@ class Grade < ApplicationRecord
   enum subject: { math: 0, science: 1, history: 2, literature: 3 }
 
   belongs_to :student
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[commest created_at deleted_at id score semester student_id subject updated_at]
+  end
 end

@@ -12,10 +12,6 @@ Rails.application.routes.draw do
     passwords: 'admins/passwords'
   }
 
-  devise_scope :customers do
-    put 'reset_password', to: 'passwords#reset_password'
-  end
-
   namespace :admins do
     resources :dashboard
   end
@@ -27,13 +23,22 @@ Rails.application.routes.draw do
   root to: 'customers/students#index'
 
   namespace :customers do
+    resources :courses do
+      collection do
+        get :get_teachers
+      end
+    end
+    resources :teachers
     resources :dashboard
     resources :birthdays
     resources :students do
       member do
-        put 'swap_positions'
         get 'media'
         put 'restore'
+      end
+      collection do
+        get 'reload_student_row'
+        put 'swap_positions'
       end
     end
     resources :customers

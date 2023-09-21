@@ -25,10 +25,4 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  def self.fullname
-    "#{first_name} #{last_name}"
-  end
-
-  scope :search, ->(fullname) { where("CONCAT(first_name, ' ', last_name) LIKE ?", "%#{fullname}%") }
 end

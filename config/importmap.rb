@@ -11,3 +11,4 @@ pin 'bootstrap', to: 'bootstrap.min.js', preload: true
 pin '@popperjs/core', to: 'popper.js', preload: true
 pin 'jquery'
 pin 'nested_form_fields'
+pin_all_from 'app/javascript/customer', under: 'customer'

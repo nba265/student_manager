@@ -1,0 +1,10 @@
+<%= form_with(model: [:customers,@course], remote: true, id: 'course-form') do |f| %>
+  <div class="form-inputs">
+    <%= f.text_field :name %>
+    <%= f.select :teacher_id, options_for_select([['Select teacher', nil]]), {}, { class: 'select-teacher' }  %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+<%= javascript_include_tag "customer/ajaxteacher" %>

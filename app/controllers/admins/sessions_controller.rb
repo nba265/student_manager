@@ -6,21 +6,13 @@ module Admins
 
     # GET /resource/sign_in
     # def new
-
+    #   super
     # end
 
     # POST /resource/sign_in
     # def create
     #   super
     # end
-
-    def after_sign_in_path_for(resource)
-      stored_location_for(resource) || admins_dashboard_index_path
-    end
-
-    def after_sign_out_path_for(resource)
-      stored_location_for(resource) || admin_session_path
-    end
 
     # DELETE /resource/sign_out
     # def destroy

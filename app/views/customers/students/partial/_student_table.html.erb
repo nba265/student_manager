@@ -16,7 +16,6 @@
     <tr id="student-<%= student.id %>">
       <td>
         <% if index > 0 %>
-          <!-- Nút "⇑" để di chuyển lên trên -->
           <button class="btn btn-warning btn-up"
                 data-student-id="<%= student.id %>" 
                 data-prev-student-id="<%= students[index - 1].id %>" 
@@ -24,7 +23,6 @@
                 data-prev-index="<%= (index - 1) %>">⇑</button>
         <% end %>
         <% if index < (students.size - 1)  %>
-          <!-- Nút "⇓" để di chuyển xuống dưới -->
           <button class="btn btn-warning btn-down" 
                 data-student-id="<%= student.id %>" 
                 data-next-student-id="<%= students[index + 1].id %>" 

@@ -121,7 +121,7 @@ module Customers
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.require(:student).permit(:name, :age, :address, :avatar, :email, :birthday,
+      params.require(:student).permit(:first_name, :last_name, :age, :address, :avatar, :email, :birthday,
                                       grades_attributes: %i[id subject score semester comments _destroy],
                                       media_attributes: %i[id video audio avatar _destroy])
     end

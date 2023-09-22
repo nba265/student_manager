@@ -5,6 +5,5 @@
 
 //= link jquery.js
 //= link bootstrap.min.js
-//= link popper.js
 //= link nested_form_fields.js
 

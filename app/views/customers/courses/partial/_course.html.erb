@@ -1,12 +1,17 @@
-<div id="<%= dom_id course %>">
-  <p>
-    <strong>Name:</strong>
-    <%= course.name %>
-  </p>
-
-  <p>
-    <strong>Teacher:</strong>
-    <%= course.teacher_id %>
-  </p>
-
-</div>
+<tr id="<%= dom_id course %>">
+  <td><%= course.id %></td>
+  <td><%= course.name %></td>
+  <td><%= course.teacher.name %></td>
+  <td><%= course.teacher.age %></td>
+  <td>
+    <button type="button"
+    onclick="showEditCourse(); hideCreateCourse()"
+     class="btn btn-primary edit_course" 
+     data-bs-toggle="modal" 
+     data-bs-target="#exampleModal"
+     data-course-id="<%= course.id %>">
+      Edit
+    </button>
+    <button class="btn btn-warning delete_course" data-course-id="<%= course.id %>" >Delete</button>
+  </td>
+</tr>

@@ -8,54 +8,58 @@
   <% end %>
   <div class="row">
     <div class="col">
-      <%= form.label :name, "Name" %>
-      <%= form.text_field :name, class: 'form-control' %>
+      <%= form.label :first_name, "First Name" %>
+      <%= form.text_field :first_name, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :last_name, "Last Name" %>
+      <%= form.text_field :last_name, class: 'form-control' %>
     </div>
     <div class="col">
       <%= form.label :age, "Age" %>
       <%= form.number_field :age, class: 'form-control' %>
     </div>
     <div class="row">
-    <div class="col">
-      <%= form.label :email, "Email" %>
-      <%= form.email_field :email, class: 'form-control' %>
-    </div>
-    <div class="col">
-      <%= form.label :birthday, "Birthday" %>
-      <%= form.date_field :birthday, class: 'form-control' %>
-    </div>
-    <div class="row">
-      <%= form.fields_for  :media do |media_fields| %>
-        <div class="col">
-          <%= media_fields.label :avatar %>
-          <%= media_fields.file_field :avatar %>
-        </div>
-        <div class="col">
-          <%= media_fields.label :audio %>
-          <%= media_fields.file_field :audio%>
-        </div>
-        <div class="col">
-          <%= media_fields.label :video %>
-          <%= media_fields.file_field :video %>
-        </div>
-      <% end %>
-    </div>
-    <div class="row">
       <div class="col">
-        <%= form.label :address, "Address" %>
-        <%= form.text_field :address, class: 'form-control' %>
+        <%= form.label :email, "Email" %>
+        <%= form.email_field :email, class: 'form-control' %>
       </div>
-    </div>
-    <br>
-    <br>
-    <div>
-      <%= form.nested_fields_for :grades do |grade_fields| %>
-        <%= render "customers/students/partial/grade_fields", grade_fields: grade_fields %>
-      <% end %>
-      <%= form.add_nested_fields_link :grades, 'Add Grade', class:"btn btn-primary"  %>
-    </div>
-    <div class="form-actions">
-      <%= form.submit "Submit", class: "btn btn-success mt-2" %>
-    </div>
-  <% end %>
-  <%= javascript_include_tag 'nested_form_fields' %>
+      <div class="col">
+        <%= form.label :birthday, "Birthday" %>
+        <%= form.date_field :birthday, class: 'form-control' %>
+      </div>
+      <div class="row">
+        <%= form.fields_for  :media do |media_fields| %>
+          <div class="col">
+            <%= media_fields.label :avatar %>
+            <%= media_fields.file_field :avatar %>
+          </div>
+          <div class="col">
+            <%= media_fields.label :audio %>
+            <%= media_fields.file_field :audio%>
+          </div>
+          <div class="col">
+            <%= media_fields.label :video %>
+            <%= media_fields.file_field :video %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= form.label :address, "Address" %>
+          <%= form.text_field :address, class: 'form-control' %>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div>
+        <%= form.nested_fields_for :grades do |grade_fields| %>
+          <%= render "customers/students/partial/grade_fields", grade_fields: grade_fields %>
+        <% end %>
+        <%= form.add_nested_fields_link :grades, 'Add Grade', class:"btn btn-primary"  %>
+      </div>
+      <div class="form-actions">
+        <%= form.submit "Submit", class: "btn btn-success mt-2" %>
+      </div>
+    <% end %>
+    <%= javascript_include_tag 'nested_form_fields' %>

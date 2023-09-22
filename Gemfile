@@ -15,8 +15,6 @@ gem 'carrierwave'
 
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
 
-gem 'bootstrap', '~> 5.3', '>= 5.3.1'
-
 gem 'nested_form_fields'
 
 gem 'foreman', github: 'ddollar/foreman'
@@ -90,6 +88,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
 end
+gem 'bootstrap'
 gem 'devise', '~> 4.9'
 gem 'letter_opener'
 gem 'letter_opener_web'
@@ -98,3 +97,4 @@ gem 'omniauth'
 gem 'paranoia'
 gem 'pry'
 gem 'ransack'
+gem 'sassc-rails'

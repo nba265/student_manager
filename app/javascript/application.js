@@ -7,10 +7,12 @@ import "nested_form_fields"
 
 import "customer/ajaxteacher"
 
-import "customer/swap_position_student"
+import "customer/delete_course"
 
+import "customer/swap_position_student" 
+
+import "bootstrap"
 
 //= require jquery3
-//= require popper
 //= require bootstrap
 

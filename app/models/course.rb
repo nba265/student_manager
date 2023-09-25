@@ -23,6 +23,8 @@ class Course < ApplicationRecord
 
   validates :name, :teacher_id, presence: true
 
+  paginates_per 10
+
   def teacher_name
     teacher.name
   end

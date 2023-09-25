@@ -18,13 +18,11 @@
           authenticity_token: $("meta[name='csrf-token']").attr("content"),
         },
         success: function () {
-          // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
           fetchStudentsData(page,deleted);
         },
       });
     });
 
-    // Xử lý sự kiện khi nhấn nút "⇓" để di chuyển xuống dưới
     $(".btn-down").click(function (e) {
       e.preventDefault();
       var studentId = $(this).data("student-id");
@@ -32,7 +30,7 @@
       var index = $(this).data("index");
       var nextIndex = $(this).data("next-index");
       const urlParams = new URLSearchParams(window.location.search);
-      const page = urlParams.get("page"); // Lấy giá trị của 'param1'
+      const page = urlParams.get("page");
       const deleted = urlParams.get("deleted");
 
       $.ajax({
@@ -44,7 +42,6 @@
           authenticity_token: $("meta[name='csrf-token']").attr("content"),
         },
         success: function () {
-          // Sau khi hoàn thành yêu cầu Ajax, cập nhật nội dung của hai hàng bị thay đổi
           fetchStudentsData(page,deleted);
         },
       });
@@ -52,12 +49,12 @@
   }
   function fetchStudentsData(page,deleted) {
     $.ajax({
-      url: "/customers/students/reload_student_table", // Điều hướng đến action students_json
+      url: "/customers/students/reload_student_table", 
       method: "GET",
       dataType: "html",
-      data: { page: page, deleted: deleted }, // Truyền số trang cần lấy dữ liệu
+      data: { page: page, deleted: deleted },
       success: function (data) {
-        $("#student_table").html(data); // Cập nhật bảng với dữ liệu mới
+        $("#student_table").html(data); 
         setupClickHandlers();
       },
       error: function () {

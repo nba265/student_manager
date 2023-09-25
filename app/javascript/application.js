@@ -3,11 +3,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 import "jquery"
+
 import "nested_form_fields"
-
-import "customer/ajaxteacher"
-
-import "customer/delete_course"
 
 import "customer/swap_position_student" 
 

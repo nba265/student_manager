@@ -1,26 +1,11 @@
 <p style="color: green"><%= notice %></p>
 <h1>Courses</h1>
-<div class="table-responsive">
-  <table class="table mx-auto table-striped table-bordered table-condensed text-center align-middle">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Teacher</th>
-        <th scope="col">Age</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @courses.each do |course| %>
-        <%= render 'customers/courses/partial/course', course: course %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<button type="button" onclick="showCreateCourse();hideEditCourse()" class="btn btn-primary course_create" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-primary course_create mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Create Course
 </button>
+<div class="table-responsive" id="table-container">
+  <%= render 'customers/courses/partial/table', courses: @courses  %>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -29,27 +14,28 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="form-inputs row">
+        <div class="form-inputs row" id="form_course">
           <div class="form-group col">
             <label for="course_name">Course Name</label>
             <input type="hidden" id="course_id">
             <input type="text" id="course_name" class="form-control" required">
           </div>
           <div class="dropdown col mt-3">
-            <button class="btn btn-info dropdown-toggle mt-2 mb-2" style="width: 200px" type="button" id="teacherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-info dropdown-toggle mt-2 mb-2" data-value="" style="width: 200px" type="button" id="teacherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               Select teacher
             </button>
-            <ul class="dropdown-menu" aria-labelledby="teacherDropdown" data-value="" id="teacherDropdownMenu" style="max-height: 200px; overflow-y: auto;">
+            <ul class="dropdown-menu" aria-labelledby="teacherDropdown" id="teacherDropdownMenu" style="max-height: 200px; overflow-y: auto;">
             </ul>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearCreateForm()" >Close</button>
         <button type="button" id="course_edit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
         <button type="button" id="course_create" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
       </div>
     </div>
   </div>
 </div>
+<%= javascript_include_tag "jquery" %>
 <%= javascript_include_tag "customer/ajaxteacher" %>

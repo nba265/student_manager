@@ -38,6 +38,20 @@ namespace :import do
     end
   end
 
+  task data_course: :environment do
+    50.times do
+      course = Course.new(
+        name: "Course #{rand(1..100)}",
+        teacher_id: rand(1..26)
+      )
+      if course.save
+        puts 'Data imported successfully.'
+      else
+        puts "Error importing data: #{course.errors.full_messages.join(', ')}"
+      end
+    end
+  end
+
   task name_student: :environment do
     arr = ('A'..'Z').to_a
     last_name = %w[Nguyen Le Tran Hoang]

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :courses do
       collection do
         get :get_teachers
+        get :load_table_data
       end
     end
     resources :teachers

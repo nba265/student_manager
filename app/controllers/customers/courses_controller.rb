@@ -13,7 +13,17 @@ module Customers
 
     # GET /courses or /courses.json
     def index
-      @courses = Course.all
+      @courses = Course.includes(:teacher).order(id: :desc).page(params[:page])
+    end
+
+    def load_table_data
+      page = params[:page].to_i || 1
+
+      @courses = Course.includes(:teacher).order(id: :desc).page(page)
+
+      @courses = Course.includes(:teacher).order(id: :desc).page(page - 1) if @courses.empty? && page > 1
+
+      respond_to(&:js)
     end
 
     # GET /courses/1 or /courses/1.json
@@ -60,14 +70,8 @@ module Customers
     # DELETE /courses/1 or /courses/1.json
     def destroy
       @course.destroy
-
-      respond_to do |format|
-        if @course.destroy
-          format.json { render json: { message: 'Deleted course successfully!' } }
-        else
-          format.json { render json: @course.errors, status: :unprocessable_entity }
-        end
-      end
+      # @courses = Course.includes(:teacher).order(id: :desc).page(params[:page])
+      # render layout: false
     end
 
     private

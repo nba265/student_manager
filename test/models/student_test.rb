@@ -16,10 +16,16 @@
 #  position   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  school_id  :bigint
 #
 # Indexes
 #
 #  index_students_on_deleted_at  (deleted_at)
+#  index_students_on_school_id   (school_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (school_id => schools.id)
 #
 require 'test_helper'
 

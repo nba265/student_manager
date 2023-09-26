@@ -52,6 +52,37 @@ namespace :import do
     end
   end
 
+  task data_school: :environment do
+    name = ('A'..'Z').to_a
+    5.times do
+      school = School.new(name: "School #{name.sample}")
+      if school.save
+        puts 'Data imported successfully.'
+      else
+        puts "Error importing data: #{school.errors.full_messages.join(', ')}"
+      end
+    end
+  end
+
+  task data_teacher_school: :environment do
+    teachers = Teacher.with_deleted.all
+    teachers.each do |teacher|
+      teacher.school_id = rand(1..5)
+      teacher.save
+    end
+  end
+
+  task data_student_school: :environment do
+    students = Student.with_deleted.all
+    students.each do |student|
+      if student.update_column(:school_id, rand(1..5))
+        puts 'Data imported successfully.'
+      else
+        puts "Error importing data: #{student.errors.full_messages.join(', ')}"
+      end
+    end
+  end
+
   task name_student: :environment do
     arr = ('A'..'Z').to_a
     last_name = %w[Nguyen Le Tran Hoang]

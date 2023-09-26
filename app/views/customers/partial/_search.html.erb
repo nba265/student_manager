@@ -1,0 +1,34 @@
+<%= hidden_field_tag :deleted, params[:deleted].presence %>
+<div class="row g-2">
+  <div class="col-md">
+    <div class="form-floating">
+      <%= search_fields.search_field :name_cont, class:"form-control", placeholder: "Search by Name", id:"floatingInputGrid" %>
+      <label for="floatingInputGrid">Name</label>
+    </div>
+  </div>
+  <div class="col-md">
+    <div class="input-group mb-3 bg-white rounded">
+      <button class="form-control dropdown-toggle" data-bs-auto-close="outside" type="button" data-bs-toggle="dropdown" aria-expanded="false">School</button>
+      <ul class="dropdown-menu w-100" >
+        <% School.all.each do |school| %>
+          <li>
+            <%= search_fields.check_box :school_id_in, {multiple: true, class:"form-check-input" }, school.id, nil %>
+            <label class="form-check-label" for="q_school_id_in_<%= school.id %>">
+              <%= school.name %>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <select class="selectpicker">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+  </select>
+  <div class="col-md">
+    <div class="form-floating">
+      <%= search_fields.submit "Search", class: "btn btn-success mt-2" %>
+    </div>
+  </div>
+</div>

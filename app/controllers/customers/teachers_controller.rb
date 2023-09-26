@@ -6,7 +6,9 @@ module Customers
 
     # GET /teachers or /teachers.json
     def index
-      @teachers = Teacher.all
+      @teachers = params[:deleted] == 'true' ? Teacher.only_deleted.includes(:school) : Teacher.includes(:school)
+      @q = @teachers.ransack(params[:q])
+      @teachers = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id).page(params[:page])
     end
 
     # GET /teachers/1 or /teachers/1.json

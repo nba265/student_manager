@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_921_034_806) do
+ActiveRecord::Schema[7.0].define(version: 20_230_926_032_824) do
   create_table 'admins', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'email', default: '', null: false
     t.string 'encrypted_password', default: '', null: false
@@ -72,6 +72,14 @@ ActiveRecord::Schema[7.0].define(version: 20_230_921_034_806) do
     t.index ['student_id'], name: 'index_media_on_student_id'
   end
 
+  create_table 'schools', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.datetime 'deleted_at'
+    t.index ['deleted_at'], name: 'index_schools_on_deleted_at'
+  end
+
   create_table 'students', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name'
     t.datetime 'created_at', null: false
@@ -84,7 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 20_230_921_034_806) do
     t.integer 'position'
     t.string 'first_name'
     t.string 'last_name'
+    t.bigint 'school_id'
     t.index ['deleted_at'], name: 'index_students_on_deleted_at'
+    t.index ['school_id'], name: 'index_students_on_school_id'
   end
 
   create_table 'teachers', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -92,9 +102,16 @@ ActiveRecord::Schema[7.0].define(version: 20_230_921_034_806) do
     t.integer 'age'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.bigint 'school_id'
+    t.integer 'position'
+    t.datetime 'deleted_at'
+    t.index ['deleted_at'], name: 'index_teachers_on_deleted_at'
+    t.index ['school_id'], name: 'index_teachers_on_school_id'
   end
 
   add_foreign_key 'courses', 'teachers'
   add_foreign_key 'grades', 'students'
   add_foreign_key 'media', 'students'
+  add_foreign_key 'students', 'schools'
+  add_foreign_key 'teachers', 'schools'
 end

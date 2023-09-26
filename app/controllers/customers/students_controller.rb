@@ -5,7 +5,11 @@ module Customers
     # before_action :set_student, only: %i[show edit update destroy]
     # GET /students or /students.json
     def index
-      @students = params[:deleted] == 'true' ? Student.only_deleted.includes(:grades) : Student.includes(:grades)
+      @students = if params[:deleted] == 'true'
+                    Student.only_deleted.includes(:grades, :school)
+                  else
+                    Student.includes(:grades, :school)
+                  end
       @q = @students.ransack(params[:q])
       @students = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id).page(params[:page])
     end
@@ -78,30 +82,35 @@ module Customers
     def destroy
       @student = Student.find(params[:id]).destroy
 
-      respond_to do |format|
-        format.html { redirect_to customers_students_url, notice: 'Student was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      page = params[:page].to_i || 1
+
+      @students = Course.includes(:teacher).order(id: :desc).page(page)
+
+      @students = Course.includes(:teacher).order(id: :desc).page(page - 1) if @students.empty? && page > 1
+
+      # respond_to do |format|
+      #   format.html { redirect_to customers_students_url, notice: 'Student was successfully destroyed.' }
+      #   format.json { head :no_content }
+      # end
+      respond_to(&:js)
     end
 
     def swap_positions
       student1 = Student.with_deleted.find(params[:id])
       student2 = Student.with_deleted.find(params[:student2_id])
-      if check_position_valid(student1, student2)
-        Students::SwapPositionsService.new(student1, student2).assign_positions_nil
-        student1 = Student.with_deleted.find(params[:id])
-        student2 = Student.with_deleted.find(params[:student2_id])
-      end
-      Students::SwapPositionsService.call(student1, student2)
-
-      head :no_content
+      # if check_position_valid(student1, student2)
+      #   Students::SwapPositionsService.new(student1, student2, Student).assign_positions_nil
+      #   student1 = Student.with_deleted.find(params[:id])
+      #   student2 = Student.with_deleted.find(params[:student2_id])
+      # end
+      Students::SwapPositionsService.call(student1, student2, Student)
     end
 
     def reload_student_table
       @students = if params[:deleted] == 'true'
-                    Student.only_deleted.page(params[:page]).includes(:grades)
+                    Student.only_deleted.page(params[:page]).includes(:grades, :school)
                   else
-                    Student.page(params[:page]).includes(:grades)
+                    Student.page(params[:page]).includes(:grades, :school)
                   end
       @q = @students.ransack(params[:q])
       @students = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id)

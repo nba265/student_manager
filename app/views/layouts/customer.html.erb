@@ -7,6 +7,12 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <style>
+      .nav-item {
+        width: 50%;
+        text-align: center;
+      }
+    </style>
   </head>
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
@@ -16,9 +22,20 @@
       </form>
     </div>
   </nav>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  <div class="container mt-5">
+  <div class="container mt-1">
+    <ul class="nav nav-tabs mb-">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="<%= customers_teachers_path %>">Teachers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="<%= customers_students_path %>">Students</a>
+      </li>
+    </ul>
+    <% if @q != nil  %>
+      <%= search_form_for [:customers,@q] do |search_fields| %>
+        <%= render "customers/partial/search", search_fields: search_fields %>
+      <% end %>
+    <% end %>
     <%= yield %>
   </div>
 </html>

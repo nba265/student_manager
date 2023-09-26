@@ -10,6 +10,9 @@ import "customer/swap_position_student"
 
 import "bootstrap"
 
+import "bootstrap-select"
+
 //= require jquery3
 //= require bootstrap
+//= require bootstrap-select
 

@@ -1,48 +1,54 @@
-  
-<thead>
-  <tr>
-    <th scope="col"></th>
-    <th scope="col">ID</th>
-    <th scope="col">Name</th>
-    <th scope="col">Age</th>
-    <th scope="col">Address</th>
-    <th scope="col">Birthday</th>
-    <th scope="col">Position</th>
-    <th scope="col"></th>
-  </tr>
-</thead>
-<tbody>
-  <% students.each_with_index do |student, index| %>
-    <tr id="student-<%= student.id %>">
-      <td>
-        <% if index > 0 %>
-          <button class="btn btn-warning btn-up"
+<table class = 'table mx-auto table-striped table-bordered table-condensed text-center align-middle'>
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">School</th>
+      <th scope="col">Position</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% students.each_with_index do |student, index| %>
+      <tr id="student-<%= student.id %>">
+        <td>
+          <% if index > 0 %>
+            <button class="btn btn-warning btn-up"
                 data-student-id="<%= student.id %>" 
                 data-prev-student-id="<%= students[index - 1].id %>" 
                 data-index="<%= index %>"
                 data-prev-index="<%= (index - 1) %>">⇑</button>
-        <% end %>
-        <% if index < (students.size - 1)  %>
-          <button class="btn btn-warning btn-down" 
+          <% end %>
+          <% if index < (students.size - 1)  %>
+            <button class="btn btn-warning btn-down" 
                 data-student-id="<%= student.id %>" 
                 data-next-student-id="<%= students[index + 1].id %>" 
                 data-index="<%= index %>"
                 data-next-index="<%= index + 1 %>">⇓</button>
-        <% end %>
-      </td>
-      <td><%= student.id %></td>
-      <td><%= link_to student.full_name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
-      <td><%= student.age %></td>
-      <td><%= student.address %></td>
-      <td><%= student.birthday %></td>
-      <td><%= student.position %></td>
-      <td>
-        <% if student.deleted? %>
-          <%= link_to "Restore", restore_customers_student_path(student.id), data: {turbo_method: :put, turbo_confirm: "Restore?"}, class: "btn btn-primary"  %>
-        <% else %>
-          <%= link_to "Media", media_customers_student_path(student), class: "btn btn-primary"  %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</tbody>
+          <% end %>
+        </td>
+        <td><%= student.id %></td>
+        <td><%= link_to student.name, customers_student_path(student), class: "text-decoration-none text-dark fw-bold" %></td>
+        <td><%= student.age %></td>
+        <td><%= student.school.name %></td>
+        <td><%= student.position %></td>
+        <td>
+          <% if student.deleted? %>
+            <%= link_to "Restore", restore_customers_student_path(student.id), data: {turbo_method: :put, turbo_confirm: "Restore?"}, class: "btn btn-primary"  %>
+          <% else %>
+            <%= link_to "Media", media_customers_student_path(student), class: "btn btn-primary"  %>
+          <% end %>
+          <%= link_to 'Delete', customers_student_path(id: student.id, page: students.current_page, deleted: params[:deleted]),
+            data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, 
+            class: "btn btn-danger" 
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="d-flex justify-content-end" id="paginate-element">
+  <%= paginate students, theme: 'bootstrap-5',
+        params: {controller: 'students', action: 'index'} %></div>

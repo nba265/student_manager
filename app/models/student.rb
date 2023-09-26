@@ -16,10 +16,16 @@
 #  position   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  school_id  :bigint
 #
 # Indexes
 #
 #  index_students_on_deleted_at  (deleted_at)
+#  index_students_on_school_id   (school_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (school_id => schools.id)
 #
 class Student < ApplicationRecord
   before_create :set_default_position
@@ -29,6 +35,7 @@ class Student < ApplicationRecord
 
   has_many :grades, -> { with_deleted }, dependent: :destroy
   has_one :media, -> { with_deleted }, dependent: :destroy
+  belongs_to :school
   accepts_nested_attributes_for :grades, :media, allow_destroy: true
 
   paginates_per 10
@@ -38,14 +45,6 @@ class Student < ApplicationRecord
   ransacker :full_name, formatter: proc { |v| v.mb_chars.downcase.to_s } do |parent|
     Arel.sql("CONCAT_WS(' ', #{parent.table.name}.last_name, #{parent.table.name}.first_name)")
   end
-
-  # def save_with_position
-  #   highest_position = Student.maximum(:position)
-  #   new_position = highest_position ? highest_position + 1 : 1
-
-  #   self.position = new_position
-  #   save
-  # end
 
   def set_default_position
     highest_position = Student.maximum(:position)
@@ -58,7 +57,7 @@ class Student < ApplicationRecord
   end
 
   def self.ransackable_associations(_auth_object = nil)
-    %w[grades media]
+    %w[grades media school]
   end
 
   def full_name

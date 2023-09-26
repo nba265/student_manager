@@ -159,7 +159,7 @@ function load_table_data() {
     method: "GET",
     dataType: "script",
     data: { page: activePageLinkHTML },
-    success: function () {
+    success: function () {  
       setupClickHandlers();
     },
     error: function () {},

@@ -1,4 +1,7 @@
 <h1>Teachers</h1>
 <div class="table-responsive" id="teachers_table">
+  <%= link_to "New Teacher", new_customers_teacher_path, data: { turbo_frame: dom_id(Teacher.new) }, class:"btn btn-primary mb-2" %>
+  <%= turbo_frame_tag Teacher.new %>
+  <%= turbo_frame_tag "teacher-update" %>
   <%= render "customers/teachers/partial/table", teachers: @teachers %>
 </div>

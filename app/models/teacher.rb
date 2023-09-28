@@ -23,8 +23,11 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Teacher < ApplicationRecord
+  before_create :set_default_position
   has_many :courses, class_name: 'course', foreign_key: 'reference_id'
   belongs_to :school
+
+  validates :school_id, :name, :age, presence: true
 
   paginates_per 10
 

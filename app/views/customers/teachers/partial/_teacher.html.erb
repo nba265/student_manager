@@ -1,12 +1,11 @@
-<div id="<%= dom_id teacher %>">
-  <p>
-    <strong>Name:</strong>
-    <%= teacher.name %>
-  </p>
-
-  <p>
-    <strong>Age:</strong>
-    <%= teacher.age %>
-  </p>
-
-</div>
+<tr>
+  <td><%= teacher.id %></td>
+  <td><%= teacher.name %></td>
+  <td><%= teacher.age %></td>
+  <td><%= teacher.school.name %></td>
+  <td><%= teacher.position %></td>
+  <td>
+    <%= link_to "Edit", edit_customers_teacher_path(teacher),data: { turbo_frame: "teacher-update" },  class: "btn btn-primary" %>
+    <button class="btn btn-danger delete_teacher" data-teacher-id="<%= teacher.id %>" >Delete</button>
+  </td>
+</tr>

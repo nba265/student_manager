@@ -1,7 +1,6 @@
 <table class="table mx-auto table-striped table-bordered table-condensed text-center align-middle">
   <thead>
     <tr>
-      <th scope="col"></th>
       <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">Age</th>
@@ -10,45 +9,9 @@
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody>
-    <% teachers.each_with_index do |teacher,index| %>
-      <tr id="<%= dom_id teacher %>">
-        <td>
-          <% if index > 0 %>
-            <button class="btn btn-warning btn-up"
-                data-teacher-id="<%= teacher.id %>" 
-                data-prev-teacher-id="<%= teachers[index - 1].id %>" 
-                data-index="<%= index %>"
-                data-prev-index="<%= (index - 1) %>">⇑</button>
-          <% end %>
-          <% if index < (teachers.size - 1)  %>
-            <button class="btn btn-warning btn-down" 
-                data-teacher-id="<%= teacher.id %>" 
-                data-next-teacher-id="<%= teachers[index + 1].id %>" 
-                data-index="<%= index %>"
-                data-next-index="<%= index + 1 %>">⇓</button>
-          <% end %>
-        </td>
-        <td><%= teacher.id %></td>
-        <td><%= teacher.name %></td>
-        <td><%= teacher.age %></td>
-        <td><%= teacher.school.name %></td>
-        <td><%= teacher.position %></td>
-        <td>
-          <button type="button"
-            class="btn btn-primary edit_teacher" 
-            data-bs-toggle="modal" 
-            data-bs-target="#exampleModal"
-            data-teacher-id="<%= teacher.id %>">
-            Edit
-          </button>
-          <button class="btn btn-danger delete_teacher" data-teacher-id="<%= teacher.id %>" >Delete</button>
-          <%# link_to 'Delete Course', 
-            customers_teacher_path(id: teacher.id, page: teachers.current_page ), 
-            data: {turbo_method: :delete, confirm: 'Are you sure?' }, 
-            class:"btn btn-danger" %>
-        </td>
-      </tr>
+  <tbody id="teachers">
+    <% teachers.each do |teacher| %>
+      <%= render "customers/teachers/partial/teacher" , teacher: teacher %>
     <% end %>
   </tbody>
 </table>

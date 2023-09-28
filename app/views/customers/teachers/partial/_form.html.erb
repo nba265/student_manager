@@ -1,14 +1,20 @@
+<%= form_with( model: [:customers,teacher], local: false) do |form| %>
 
-<%= simple_form_for(@teacher) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :age %>
+  <div class="row">
+    <div class="col">
+      <%= form.label :name, "Name" %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :age, "Age" %>
+      <%= form.number_field :age, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= form.label :school_id, "School" %>
+      <%= form.select :school_id, ["Select school"] + School.all.map{|s| [s.name, s.id] }, {}, class:"form-control" %>
+    </div>
   </div>
-
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= form.submit "Submit", class: "btn btn-success mt-2" %>
   </div>
 <% end %>

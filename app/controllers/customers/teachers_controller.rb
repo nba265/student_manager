@@ -8,7 +8,7 @@ module Customers
     def index
       @teachers = params[:deleted] == 'true' ? Teacher.only_deleted.includes(:school) : Teacher.includes(:school)
       @q = @teachers.ransack(params[:q])
-      @teachers = @q.result.order(Arel.sql('position IS NULL, position ASC'), :id).page(params[:page])
+      @teachers = @q.result.order(position: :desc, id: :desc).page(params[:page])
     end
 
     # GET /teachers/1 or /teachers/1.json
@@ -20,7 +20,12 @@ module Customers
     end
 
     # GET /teachers/1/edit
-    def edit; end
+    def edit
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+      end
+    end
 
     # POST /teachers or /teachers.json
     def create
@@ -28,11 +33,10 @@ module Customers
 
       respond_to do |format|
         if @teacher.save
-          format.html { redirect_to customers_teacher_url(@teacher), notice: 'Teacher was successfully created.' }
-          format.json { render :show, status: :created, location: @teacher }
+          format.html { redirect_to customers_teachers_url, notice: 'Teacher was successfully created.' }
+          format.turbo_stream
         else
           format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @teacher.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -69,7 +73,7 @@ module Customers
 
     # Only allow a list of trusted parameters through.
     def teacher_params
-      params.require(:teacher).permit(:name, :age)
+      params.require(:teacher).permit(:name, :age, :school_id)
     end
   end
 end

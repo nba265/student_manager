@@ -16,13 +16,6 @@
         <td><%= course.teacher.name %></td>
         <td><%= course.teacher.age %></td>
         <td>
-          <button type="button"
-            class="btn btn-primary edit_course" 
-            data-bs-toggle="modal" 
-            data-bs-target="#exampleModal"
-            data-course-id="<%= course.id %>">
-            Edit
-          </button>
           <button class="btn btn-warning delete_course" data-course-id="<%= course.id %>" >Delete</button>
           <%# link_to 'Delete Course', 
             customers_course_path(id: course.id, page: courses.current_page ), 
